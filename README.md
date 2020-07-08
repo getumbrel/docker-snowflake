@@ -1,6 +1,9 @@
 #### Building and Running:
+``` 
+docker-compose up
 ```
-docker build -t snowflake/proxy .
 
-docker run -p 8090:8090 snowflake/proxy snowflake-proxy 
+#### To Re-build and Run:
+``` 
+docker-compose up --build 
 ```

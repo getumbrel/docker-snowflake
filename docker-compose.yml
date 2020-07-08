@@ -1,0 +1,9 @@
+ version: "3.4"
+
+ services:
+    snowflake-proxy:
+        build: .
+        image: hashik/snowflake-proxy:latest
+        container_name: snowflake-proxy
+        ports: 
+            - 9090:9090
