@@ -2,6 +2,8 @@
 
  services:
     snowflake-proxy:
-        build: .
+        build:
+            context: .
+            network: host
         image: hashik/snowflake-proxy:latest
         container_name: snowflake-proxy
