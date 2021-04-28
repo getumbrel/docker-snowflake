@@ -2,8 +2,7 @@
 
  services:
     snowflake-proxy:
-        build:
-            context: .
-            network: host
-        image: hashik/snowflake-proxy:latest
+        network_mode: host
+        image: thetorproject/snowflake-proxy:latest
         container_name: snowflake-proxy
+        restart: unless-stopped
