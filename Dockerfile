@@ -1,15 +1,11 @@
+FROM alpine:3.14 AS builder
+RUN apk add --update go git
+WORKDIR /builder
+RUN git clone -b v1.1.0 https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/ 
+WORKDIR /builder/snowflake/proxy
+RUN go get 
+RUN go build -o proxy .
+
 FROM alpine:3.14
-
-RUN apk --no-cache add --update go wget tar \
-    && wget https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/archive/v1.1.0/snowflake-v1.1.0.tar.bz2 \
-    && tar xjf snowflake-v1.1.0.tar.bz2 \
-    && cd snowflake-v1.1.0/proxy \
-    && go get && GO111MODULE=on go build -o proxy . \
-    && mv proxy /usr/local/bin/ \
-    && go clean -r -cache -modcache \
-    && cd ../.. \
-    && rm -rf snowflake \
-    && rm snowflake-v1.1.0.tar.bz2 \
-    && apk del go wget tar
-
-ENTRYPOINT [ "proxy" ]
+COPY --from=builder /builder/snowflake/proxy/proxy /proxy
+ENTRYPOINT [ "/proxy" ]
