@@ -1,5 +1,10 @@
-FROM golang:1.15
+FROM golang:1.17 AS builder
+WORKDIR /builder
+RUN git clone -b v1.1.0 https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/ 
+WORKDIR /builder/snowflake/proxy
+RUN go get 
+RUN go build -ldflags "-linkmode external -extldflags -static" -o proxy .
 
-RUN GO111MODULE=on go get git.torproject.org/pluggable-transports/snowflake.git/proxy@v1.1.0
-
-ENTRYPOINT [ "proxy" , "--broker" , "https://snowflake-broker.torproject.net/" , "--relay" , "wss://snowflake.torproject.net/" ]
+FROM alpine:3.14
+COPY --from=builder /builder/snowflake/proxy/proxy /proxy
+ENTRYPOINT [ "/proxy" ]
