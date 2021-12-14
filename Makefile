@@ -14,7 +14,7 @@ release:
 
 .PHONY: build
 build:
-	docker build -t $(IMAGE) .
+	docker build --build-arg VERSION=$(VERSION) -t $(IMAGE) .
 
 .PHONY: deploy
 deploy:

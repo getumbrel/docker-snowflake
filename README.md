@@ -6,7 +6,7 @@ docker-compose up -d
 ## Releasing a new image
 First, build the image:
 ```
-make build
+make build VERSION=X.Y
 ```
 Next, release a new version by adding a tag:
 ```
