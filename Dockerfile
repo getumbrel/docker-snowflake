@@ -1,4 +1,4 @@
-FROM docker.io/library/golang:1.17 AS builder
+FROM docker.io/library/golang:1.21.4 AS builder
 
 ARG VERSION=main
 
